@@ -5,5 +5,5 @@ author_profile: true
 redirect_from: 
   - /about/
   - /about.html
----
-张祥玉连网页都不会写，好可怜啊
+---# 欢迎来到 离瑜二网站！
+内容待更新
