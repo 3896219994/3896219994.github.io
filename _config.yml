@@ -9,7 +9,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default" # Currently available options are "default", "air"
-title                    : "个人主页"#标题
+title                    : "离瑜二网页测试"#标题
 
 title_separator          : "-"
 name                     : &name "第二位开发者香肠"
