@@ -1,9 +1,9 @@
 ---
-title: "Teaching experience 2"
-collection: teaching
-type: "Workshop"
-permalink: /teaching/2015-spring-teaching-1
-venue: "University 1, Department"
+title: "hi欢迎回来"
+collection: 搜打撤
+type: "重开"
+permalink: /简单的开挂/2025-离脚本-完全免费-1
+venue: "或许将从新开始"
 date: 2015-01-01
 location: "City, Country"
 ---
