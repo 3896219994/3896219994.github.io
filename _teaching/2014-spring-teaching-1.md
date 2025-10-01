@@ -1,6 +1,6 @@
 ---
 title: "离瑜二创作团队"
-collection: teaching
+collection: 此网站全时段开启
 type: "群710230891"
 permalink: /teaching/2025-香肠死亡日期-10-09-1
 venue: "University 1, Department"
