@@ -1,76 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>全屏扩散粒子</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+html,body{margin:0;height:100vh;background:#0a0a0a;overflow:hidden;}
+/* 粒子公用样式 */
+.particle{
+  position:fixed;
+  border-radius:50%;
+  pointer-events:none;
+  will-change:transform,opacity;   /* 硬件加速 */
+}
+</style>
+</head>
+<body>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // 图片点击特效
-    document.addEventListener('click', function(e) {
-        const imgEffect = document.createElement('div');
-        
-        // 使用你提供的图片链接
-        const imageUrl = 'https://s21.ax1x.com/2025/09/30/pVTPub6.jpg';
-        
-        imgEffect.innerHTML = `<img src="${imageUrl}" alt="点击特效">`;
-        imgEffect.style.position = 'fixed';
-        imgEffect.style.left = e.pageX - 30 + 'px'; // 调整为中心对准点击位置
-        imgEffect.style.top = e.pageY - 30 + 'px';
-        imgEffect.style.pointerEvents = 'none';
-        imgEffect.style.zIndex = '9999';
-        imgEffect.style.animation = 'imageEffect 1.2s ease-out forwards';
-        
-        // 图片样式 - 调小尺寸
-        const img = imgEffect.querySelector('img');
-        img.style.width = '60px';
-        img.style.height = '60px';
-        img.style.borderRadius = '6px';
-        img.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
-        img.style.objectFit = 'cover';
-        img.style.filter = 'brightness(1.1)'; // 稍微提亮图片
-        
-        document.body.appendChild(imgEffect);
-        
-        // 1.2秒后移除元素
-        setTimeout(() => {
-            if (imgEffect.parentNode) {
-                imgEffect.remove();
-            }
-        }, 1200);
-    });
+/* ========== 全局扩散粒子 ========== */
+const colorPool=['#ff6b6b','#f9ca24','#4ecdc4','#45b7d1','#dfe6e9','#a29bfe','#fd79a8'];
+
+document.addEventListener('click',e=>{
+  const {clientX:x,clientY:y}=e;
+  const amount=60+Math.floor(Math.random()*40);      // 60~100 颗
+  for(let i=0;i<amount;i++){
+    const p=document.createElement('i');
+    p.className='particle';
+
+    /* 随机属性 */
+    const size   =2+Math.random()*5;                 // 2~7 px
+    const angle  =Math.random()*360;                 // 0~360°
+    const dist   =80+Math.random()*120;              // 80~200 px
+    const dur    =1.2+Math.random()*.8;              // 1.2~2 s
+    const bright =colorPool[Math.floor(Math.random()*colorPool.length)];
+
+    /* 起始位置 */
+    p.style.left=`${x}px`;
+    p.style.top =`${y}px`;
+    p.style.width=p.style.height=`${size}px`;
+    p.style.background=bright;
+    p.style.boxShadow=`0 0 ${size*2}px ${bright}`;   // 发光
+    p.style.zIndex=9999;
+
+    /* 动画：先快后慢（ease-out） */
+    p.style.animation=`spread ${dur}s ease-out forwards`;
+    p.style.transformOrigin='center center';
+
+    /* 把“方向”写进自定义属性，再由 keyframes 读取 */
+    p.style.setProperty('--angle',`${angle}deg`);
+    p.style.setProperty('--dist',`${dist}px`);
+
+    document.body.appendChild(p);
+    p.addEventListener('animationend',()=>p.remove());
+  }
 });
 
-// 添加CSS动画
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes imageEffect {
-        0% {
-            opacity: 0;
-            transform: translateY(0) scale(0.4) rotate(0deg);
-        }
-        20% {
-            opacity: 1;
-            transform: translateY(-15px) scale(0.9) rotate(3deg);
-        }
-        40% {
-            opacity: 1;
-            transform: translateY(-30px) scale(0.8) rotate(-2deg);
-        }
-        60% {
-            opacity: 1;
-            transform: translateY(-45px) scale(0.75) rotate(1deg);
-        }
-        80% {
-            opacity: 0.6;
-            transform: translateY(-55px) scale(0.7) rotate(0deg);
-            filter: blur(0px);
-        }
-        100% {
-            opacity: 0;
-            transform: translateY(-65px) scale(0.6) rotate(0deg);
-            filter: blur(2px); /* 最后添加模糊效果增强渐变消失 */
-        }
-    }
-    
-    /* 确保动画平滑 */
-    .image-effect-animation {
-        animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-`;
+/* ====== 只用一套 keyframes，所有粒子复用 ====== */
+const style=document.createElement('style');
+style.textContent=`
+@keyframes spread{
+  0%{
+    transform:translate(-50%,-50%) rotate(var(--angle)) translateX(0) scale(1);
+    opacity:1;
+  }
+  100%{
+    transform:translate(-50%,-50%) rotate(var(--angle)) translateX(var(--dist)) scale(0);
+    opacity:0;
+  }
+}`;
 document.head.appendChild(style);
 </script>
+</body>
+</html> 
