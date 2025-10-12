@@ -1,1 +1,76 @@
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 图片点击特效
+    document.addEventListener('click', function(e) {
+        const imgEffect = document.createElement('div');
+        
+        // 使用你提供的图片链接
+        const imageUrl = 'https://s21.ax1x.com/2025/09/30/pVTPub6.jpg';
+        
+        imgEffect.innerHTML = `<img src="${imageUrl}" alt="点击特效">`;
+        imgEffect.style.position = 'fixed';
+        imgEffect.style.left = e.pageX - 30 + 'px'; // 调整为中心对准点击位置
+        imgEffect.style.top = e.pageY - 30 + 'px';
+        imgEffect.style.pointerEvents = 'none';
+        imgEffect.style.zIndex = '9999';
+        imgEffect.style.animation = 'imageEffect 1.2s ease-out forwards';
+        
+        // 图片样式 - 调小尺寸
+        const img = imgEffect.querySelector('img');
+        img.style.width = '60px';
+        img.style.height = '60px';
+        img.style.borderRadius = '6px';
+        img.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+        img.style.objectFit = 'cover';
+        img.style.filter = 'brightness(1.1)'; // 稍微提亮图片
+        
+        document.body.appendChild(imgEffect);
+        
+        // 1.2秒后移除元素
+        setTimeout(() => {
+            if (imgEffect.parentNode) {
+                imgEffect.remove();
+            }
+        }, 1200);
+    });
+});
 
+// 添加CSS动画
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes imageEffect {
+        0% {
+            opacity: 0;
+            transform: translateY(0) scale(0.4) rotate(0deg);
+        }
+        20% {
+            opacity: 1;
+            transform: translateY(-15px) scale(0.9) rotate(3deg);
+        }
+        40% {
+            opacity: 1;
+            transform: translateY(-30px) scale(0.8) rotate(-2deg);
+        }
+        60% {
+            opacity: 1;
+            transform: translateY(-45px) scale(0.75) rotate(1deg);
+        }
+        80% {
+            opacity: 0.6;
+            transform: translateY(-55px) scale(0.7) rotate(0deg);
+            filter: blur(0px);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-65px) scale(0.6) rotate(0deg);
+            filter: blur(2px); /* 最后添加模糊效果增强渐变消失 */
+        }
+    }
+    
+    /* 确保动画平滑 */
+    .image-effect-animation {
+        animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+`;
+document.head.appendChild(style);
+</script>
