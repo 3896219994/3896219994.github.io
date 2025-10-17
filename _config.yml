@@ -24,7 +24,7 @@ repository               : "3896219994/3896219994.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "[url=https://imgchr.com/i/pVLi2qJ][img]https://s21.ax1x.com/2025/10/17/pVLi2qJ.png[/img][/url]"#头像
+  avatar           : "https://s21.ax1x.com/2025/10/17/pVLi2qJ.png"#头像
   name             : "离瑜二"
   pronouns         :  # example: "she/her"  
   bio              : "是否需要管理员权限"
